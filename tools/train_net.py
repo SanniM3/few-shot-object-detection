@@ -28,6 +28,7 @@ from fsdet.evaluation import (
     DatasetEvaluators,
     LVISEvaluator,
     PascalVOCDetectionEvaluator,
+    NewDatasetEvaluator,
     verify_results,
 )
 
@@ -58,6 +59,8 @@ class Trainer(DefaultTrainer):
             )
         if evaluator_type == "pascal_voc":
             return PascalVOCDetectionEvaluator(dataset_name)
+        if evaluator_type == "new_dataset":
+            return NewDatasetEvaluator(dataset_name)
         if evaluator_type == "lvis":
             return LVISEvaluator(dataset_name, cfg, True, output_folder)
         if len(evaluator_list) == 0:
