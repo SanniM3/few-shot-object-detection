@@ -20,3 +20,4 @@ class NewDatasetEvaluator(DatasetEvaluator):
             "AP50": results["AP50"],
             "AP75": results["AP75"],
         }
+        
