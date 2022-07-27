@@ -374,6 +374,16 @@ PASCAL_VOC_BASE_CATEGORIES = {
         "tvmonitor",
     ],
 }
+CUSTOM_NOVEL_CATEGORIES = {
+    1: ["masks"],
+}
+CUSTOM_ALL_CATEGORIES = {
+    1: PASCAL_VOC_BASE_CATEGORIES[1]+CUSTOM_NOVEL_CATEGORIES[1]
+}
+CUSTOM_BASE_CATEGORIES = {
+    1: PASCAL_VOC_BASE_CATEGORIES[1]
+}
+
 
 
 def _get_coco_instances_meta():
@@ -453,7 +463,14 @@ def _get_pascal_voc_fewshot_instances_meta():
         "base_classes": PASCAL_VOC_BASE_CATEGORIES,
     }
     return ret
-
+    
+def _get_custom_fewshot_instances_meta():
+    ret = {
+        "thing_classes": CUSTOM_ALL_CATEGORIES,
+        "novel_classes": CUSTOM_NOVEL_CATEGORIES,
+        "base_classes": CUSTOM_BASE_CATEGORIES,
+    }
+    return ret
 
 def _get_builtin_metadata(dataset_name):
     if dataset_name == "coco":
@@ -466,4 +483,6 @@ def _get_builtin_metadata(dataset_name):
         return _get_lvis_fewshot_instances_meta_v0_5()
     elif dataset_name == "pascal_voc_fewshot":
         return _get_pascal_voc_fewshot_instances_meta()
+    elif dataset_name == 'custom_fewshot':
+        return _get_custom_fewshot_instances_meta()
     raise KeyError("No built-in metadata for dataset {}".format(dataset_name))
