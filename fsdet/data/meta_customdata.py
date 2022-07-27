@@ -41,3 +41,20 @@ def load_custom_labelme_instances(dataset_name, thing_classes, dataset_dir):
     for idx, ann_path in enumerate(glob.glob(os.path.join(dataset_dir, '*.json'))):
         data.append(extract_info_from_json(ann_path, idx, thing_classes))
     return data
+
+def register_custom_dataset(name, thing_classes, metadata, dataset_dir):
+    # register dataset (step 1)
+    DatasetCatalog.register(
+        name, # name of dataset, this will be used in the config file
+        lambda: load_custom_labelme_instances( # this calls your dataset loader to get the data
+            name, thing_classes, dataset_dir # inputs to your dataset loader
+        ),
+    )
+
+    # register meta information (step 2)
+    MetadataCatalog.get(name).set(
+        thing_classes=metadata["thing_classes"], # all classes
+        base_classes=metadata["base_classes"], # base classes
+        novel_classes=metadata["novel_classes"], # novel classes
+    )
+    MetadataCatalog.get(name).evaluator_type = "new_dataset" # set evaluator
