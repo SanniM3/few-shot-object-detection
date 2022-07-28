@@ -272,7 +272,7 @@ def register_all_custom_data():
     }
     for dataset_name, classes in datasets.items():
         register_custom_dataset(name='dataset_name', thing_classes=classes, 
-                            metadata=_get_builtin_metadata("custom_fewshot"), dataset_dir="/content/drive/MyDrive/Auto_annotation/maskDataAnnotated2")
+                            metadata=_get_builtin_metadata("custom_fewshot"), dataset_dir="/content/drive/MyDrive/Auto_annotation/maskDataAnnotated2/valid")
 
 # Register them all under "./datasets"
 register_all_coco()
