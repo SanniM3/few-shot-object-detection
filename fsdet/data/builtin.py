@@ -20,6 +20,7 @@ from .builtin_meta import _get_builtin_metadata
 from .meta_coco import register_meta_coco
 from .meta_lvis import register_meta_lvis
 from .meta_pascal_voc import register_meta_pascal_voc
+from .meta_customdata import register_custom_dataset
 
 # ==== Predefined datasets and splits for COCO ==========
 
@@ -262,8 +263,19 @@ def register_all_pascal_voc(root="datasets"):
         )
         MetadataCatalog.get(name).evaluator_type = "pascal_voc"
 
+def register_all_custom_data():
+    metadata=_get_builtin_metadata("custom_fewshot")
+    datasets = {
+    'dataset_all': metadata["thing_classes"],
+    'dataset_base': metadata["base_classes"],
+    'dataset_novel': metadata["novel_classes"],
+    }
+    for dataset_name, classes in datasets.items():
+        register_custom_dataset(name='dataset_name', thing_classes=classes, 
+                            metadata=_get_builtin_metadata("custom_fewshot"), dataset_dir="/content/drive/MyDrive/Auto_annotation/maskDataAnnotated2")
 
 # Register them all under "./datasets"
 register_all_coco()
 register_all_lvis()
 register_all_pascal_voc()
+register_custom_dataset()
